@@ -1,44 +1,42 @@
 import { useState } from "react";
-import "../styles/admin-login.css"
+import "../styles/admin-login.css";
 
 export default function AdminLogin({ onSuccess }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const login = async e => {
+  const login = async (e) => {
     e.preventDefault();
     setError("");
 
     try {
-  const res = await fetch(
-    "http://localhost:5050/api/admin/login",
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include", // REQUIRED
-      body: JSON.stringify({ email, password })
+      const res = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/api/admin/login`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include", // REQUIRED for cookies
+          body: JSON.stringify({ email, password })
+        }
+      );
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.message || "Login failed");
+        return;
+      }
+
+      // ✅ SAVE ACCESS TOKEN
+      localStorage.setItem("accessToken", data.accessToken);
+
+      // ✅ REDIRECT TO DASHBOARD
+      onSuccess();
+    } catch (err) {
+      console.error(err);
+      setError("Server not reachable");
     }
-  );
-
-  const data = await res.json();
-
-  if (!res.ok) {
-    setError(data.message || "Login failed");
-    return;
-  }
-
-  // ✅ SAVE ACCESS TOKEN
-  localStorage.setItem("accessToken", data.accessToken);
-
-  // ✅ REDIRECT TO DASHBOARD
-  onSuccess();
-} catch (err) {
-  console.error(err);
-  setError("Server not reachable");
-}
-
-
   };
 
   return (
@@ -52,14 +50,16 @@ export default function AdminLogin({ onSuccess }) {
           type="email"
           placeholder="Admin Email"
           value={email}
-          onChange={e => setEmail(e.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
+          required
         />
 
         <input
           type="password"
           placeholder="Password"
           value={password}
-          onChange={e => setPassword(e.target.value)}
+          onChange={(e) => setPassword(e.target.value)}
+          required
         />
 
         <button type="submit">Login</button>
