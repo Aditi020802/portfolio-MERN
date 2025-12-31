@@ -11,26 +11,14 @@ const app = express();
 /* ✅ REQUIRED FOR RENDER */
 app.set("trust proxy", 1);
 
-/* ✅ FINAL CORS FIX (LOCAL FRONTEND) */
+/* ✅ FINAL CORS CONFIG (LOCAL FRONTEND) */
 app.use(
   cors({
-    origin: function (origin, callback) {
-      if (!origin) return callback(null, true);
-
-      if (origin === "http://localhost:5173") {
-        return callback(null, true);
-      }
-
-      return callback(new Error("CORS blocked"));
-    },
+    origin: "http://localhost:5173",
     methods: ["GET", "POST", "OPTIONS"],
-    allowedHeaders: ["Content-Type"],
     credentials: true
   })
 );
-
-/* ✅ FIXED PREFLIGHT HANDLER */
-app.options("/*", cors());
 
 app.use(helmet());
 app.use(express.json());
