@@ -6,16 +6,35 @@ import LogoutButton from "./LogoutButton";
 
 export default function AdminDashboard() {
   const [visits, setVisits] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:5050/api/analytics/visits", {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token")
+    const fetchVisits = async () => {
+      try {
+        const res = await fetch(
+          `${import.meta.env.VITE_API_BASE_URL}/api/analytics/visits`
+        );
+
+        if (!res.ok) throw new Error("Failed to fetch visits");
+
+        const data = await res.json();
+
+        // ✅ Always normalize
+        setVisits(Array.isArray(data) ? data : []);
+      } catch (err) {
+        console.error("Admin visits fetch error:", err.message);
+        setVisits([]);
+      } finally {
+        setLoading(false);
       }
-    })
-      .then(res => res.json())
-      .then(setVisits);
+    };
+
+    fetchVisits();
   }, []);
+
+  if (loading) {
+    return <p style={{ padding: 20 }}>Loading dashboard...</p>;
+  }
 
   return (
     <div className="dashboard">

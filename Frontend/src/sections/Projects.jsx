@@ -50,7 +50,7 @@ export default function Projects() {
         "A dynamic MERN stack personal portfolio website with a React frontend and a Node.js + Express backend, featuring MongoDB-based content management, secure JWT authentication, an admin dashboard for managing projects and content, responsive design, and smooth UI animations.",
       tech: ["React", "Node.js", "Express", "MongoDB"],
       live: "#",
-      source: "#"
+      source: "https://github.com/Aditi020802/portfolio-MERN"
     }
   ];
 
