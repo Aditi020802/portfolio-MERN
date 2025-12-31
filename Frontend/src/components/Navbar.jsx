@@ -11,7 +11,27 @@ export default function Navbar() {
 
   const closeMenu = () => setOpen(false);
 
-  // smooth scroll
+  /* ================= RESUME DOWNLOAD ================= */
+  const handleResumeDownload = async () => {
+    try {
+      // 🔔 notify backend (send email)
+      fetch(`${import.meta.env.VITE_API_BASE_URL}/api/resume/download`, {
+        method: "POST"
+      });
+    } catch (err) {
+      console.error("Resume notify failed");
+    }
+
+    // 📄 download resume from frontend
+    const link = document.createElement("a");
+    link.href = resume;
+    link.download = "Aditi_Modhvadiya_Resume.pdf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  /* ================= SMOOTH SCROLL ================= */
   const scrollToSection = (id) => {
     const el = document.getElementById(id);
     if (!el) return;
@@ -21,7 +41,7 @@ export default function Navbar() {
     closeMenu();
   };
 
-  // active section detect
+  /* ================= ACTIVE SECTION ================= */
   useEffect(() => {
     const sections = document.querySelectorAll("section");
 
@@ -43,7 +63,7 @@ export default function Navbar() {
   return (
     <div className="site">
       <header className="navbar">
-        {/* LEFT */}
+        {/* ================= LEFT ================= */}
         <div className="nav-left">
           <div className="logo" onClick={() => scrollToSection("home")}>
             <div className="logo-image">
@@ -65,7 +85,7 @@ export default function Navbar() {
           </nav>
         </div>
 
-        {/* RIGHT */}
+        {/* ================= RIGHT ================= */}
         <div className="nav-right">
           {/* THEME TOGGLE */}
           <div className="theme-toggle" onClick={toggleTheme}>
@@ -103,13 +123,8 @@ export default function Navbar() {
             <span />
           </button>
 
-          {/* RESUME DOWNLOAD (BACKEND) */}
-          <a
-            href={`${import.meta.env.VITE_API_BASE_URL}/api/resume/download`}
-            className="btn"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          {/* RESUME BUTTON (DESKTOP) */}
+          <button className="btn" onClick={handleResumeDownload}>
             <svg
               width="16"
               height="16"
@@ -125,11 +140,11 @@ export default function Navbar() {
               <line x1="12" y1="15" x2="12" y2="3" />
             </svg>
             Resume
-          </a>
+          </button>
         </div>
       </header>
 
-      {/* MOBILE MENU */}
+      {/* ================= MOBILE MENU ================= */}
       <div className={`mobile-menu ${open ? "show" : ""}`}>
         {["home", "about", "skills", "projects", "contact"].map((item) => (
           <button
@@ -141,10 +156,10 @@ export default function Navbar() {
           </button>
         ))}
 
-        {/* local resume file */}
-        <a href={resume} download className="btn">
+        {/* RESUME BUTTON (MOBILE) */}
+        <button className="btn" onClick={handleResumeDownload}>
           Resume
-        </a>
+        </button>
       </div>
     </div>
   );
