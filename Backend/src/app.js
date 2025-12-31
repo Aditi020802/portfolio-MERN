@@ -14,7 +14,10 @@ app.set("trust proxy", 1);
 /* ✅ FINAL CORS CONFIG (LOCAL FRONTEND) */
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: [
+      "http://localhost:5173",            // local dev
+      "https://aditiportfolio02.netlify.app" // production
+    ],
     methods: ["GET", "POST", "OPTIONS"],
     credentials: true
   })
