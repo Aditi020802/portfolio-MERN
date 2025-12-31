@@ -1,0 +1,247 @@
+/* ================================
+   SKILLS / RADAR SECTION
+================================ */
+
+/* ===== SECTION ===== */
+.radar-section {
+  padding: 80px 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ===== TITLE ===== */
+.section-title {
+  font-size: 42px;
+  position: relative;
+  display: inline-block;
+}
+
+/* ===== UNDERLINE ===== */
+.skills-underline {
+  display: block;
+  width: 0;
+  height: 4px;
+  margin: 10px auto 0;
+  background: linear-gradient(90deg, #6366f1, #8b5cf6);
+  border-radius: 4px;
+  transition: width 0.6s ease;
+}
+
+/* reveal underline */
+.reveal.show .skills-underline {
+  width: 110px;
+}
+
+/* ================================
+   RADAR CHART
+================================ */
+
+.radar-wrapper {
+  position: relative;
+  max-width: 420px;
+  margin: 60px auto 0;
+}
+
+.radar-svg {
+  width: 100%;
+}
+
+/* GRID */
+.radar-grid circle {
+  fill: none;
+  stroke: rgba(99, 102, 241, 0.25);
+}
+
+/* AXES */
+.radar-axes line {
+  stroke: rgba(99, 102, 241, 0.3);
+}
+
+/* SHAPE */
+.radar-shape {
+  fill: url(#radarGrad);
+  fill-opacity: 0.35;
+  stroke: #6366f1;
+  stroke-width: 2;
+  transform-origin: 50% 50%;
+  transform: scale(0);
+  transition: transform 1.2s ease;
+}
+
+/* ACTIVE SHAPE */
+.radar-section.show .radar-shape {
+  transform: scale(1);
+}
+
+/* POINTS */
+.radar-points circle {
+  r: 6;
+  fill: #6366f1;
+  opacity: 0;
+  transition: 0.3s ease;
+}
+
+.radar-points circle.active {
+  opacity: 1;
+}
+
+.radar-points circle:hover {
+  r: 9;
+  fill: #8b5cf6;
+}
+
+/* LABELS */
+.radar-labels text {
+  fill: var(--text);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* TOOLTIP */
+.radar-tooltip {
+  position: absolute;
+  background: #111827;
+  color: #fff;
+  padding: 6px 12px;
+  font-size: 12px;
+  border-radius: 8px;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, -10px);
+  transition: 0.2s ease;
+  z-index: 10;
+}
+
+/* ================================
+   SKILL ICON GRID
+================================ */
+
+.skills-icons {
+  margin: 40px auto 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 24px;
+}
+
+.icon-skill {
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(14px);
+  padding: 22px;
+  border-radius: 18px;
+  font-weight: 600;
+  box-shadow: var(--shadow);
+  transition: 0.35s ease;
+  text-align: center;
+}
+
+.icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-skill img {
+  display: block;
+  height: 28px;
+  width: 28px;
+  margin-bottom: 8px;
+}
+
+.icon-skill:hover {
+  transform: translateY(-8px);
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: #fff;
+}
+
+/* DARK MODE ICON CARD */
+body.dark .icon-skill {
+  background: rgba(30, 41, 59, 0.6);
+}
+
+/* ================================
+   DECORATIVE SVGs
+================================ */
+
+.skill-decor {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.25;
+  animation: floatDecor 14s ease-in-out infinite;
+}
+
+/* BLOB */
+.skill-decor-blob {
+  width: 260px;
+  top: -90px;
+  left: -90px;
+  filter: blur(10px);
+}
+
+/* DOTS */
+.skill-decor-dots {
+  width: 140px;
+  bottom: 40px;
+  right: 60px;
+  fill: #8b5cf6;
+  animation-delay: 3s;
+}
+
+/* LINES */
+.skill-decor-lines {
+  width: 220px;
+  top: 120px;
+  right: -40px;
+  stroke: #6366f1;
+  stroke-width: 1.5;
+  fill: none;
+  opacity: 0.35;
+  animation-delay: 6s;
+}
+
+/* FLOAT ANIMATION */
+@keyframes floatDecor {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+/* DARK MODE DECOR */
+body.dark .skill-decor {
+  opacity: 0.18;
+}
+
+/* CONTENT ABOVE DECOR */
+.radar-section *:not(.skill-decor) {
+  position: relative;
+  z-index: 2;
+}
+
+/* ================================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 34px;
+  }
+
+  .radar-wrapper {
+    max-width: 340px;
+  }
+}
+
+@media (max-width: 480px) {
+  .radar-wrapper {
+    max-width: 300px;
+  }
+
+  .skills-icons {
+    gap: 18px;
+  }
+}

@@ -1,0 +1,126 @@
+.about{
+  padding:120px 0;
+  position:relative;
+  overflow:hidden;
+}
+
+.about-container{
+  max-width:1200px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:1fr 1.2fr;
+  gap:80px;
+  align-items:center;
+}
+
+/* IMAGE */
+.image-wrapper{
+  border-radius:28px;
+  overflow:hidden;
+  box-shadow:0 30px 70px rgba(0,0,0,.15);
+  transition:.4s ease;
+}
+.image-wrapper img{
+  width:100%;
+  display:block;
+  transition:.5s ease;
+}
+.image-wrapper:hover{
+  transform:translateY(-10px);
+}
+.image-wrapper:hover img{
+  transform:scale(1.05);
+}
+
+/* CONTENT */
+.about-title{
+  font-size:42px;
+  margin-bottom:24px;
+}
+.title-line{
+  display:block;
+  width:0;
+  height:4px;
+  margin-top:10px;
+  background:linear-gradient(90deg,#6366f1,#8b5cf6);
+  transition:.6s ease;
+}
+.about-content.show .title-line{
+  width:190px;
+}
+
+.about-content p{
+  color:var(--muted);
+  line-height:1.7;
+  margin-bottom:18px;
+}
+
+.about-buttons{
+  margin-top:30px;
+  display:flex;
+  gap:16px;
+}
+
+/* REVEAL */
+.reveal-left,
+.reveal-right{
+  opacity:0;
+  transition:1s cubic-bezier(.2,.8,.2,1);
+}
+.reveal-left{transform:translateX(-60px)}
+.reveal-right{transform:translateX(60px)}
+.show{
+  opacity:1;
+  transform:none;
+}
+.btn.outline {
+      background: transparent;
+      color: var(--primary);
+      border: 1px solid var(--primary);
+    }
+
+    .btn.outline:hover {
+      background: var(--primary);
+      color: #fff;
+    }
+
+
+/* SVG DECOR */
+.about-svg{
+  position:absolute;
+  z-index:-1;
+  opacity:.18;
+  animation:floatSvg 12s ease-in-out infinite;
+}
+.about-svg svg{
+  width:220px;
+  height:220px;
+}
+
+/* positions */
+.about-svg-1{top:-60px;left:-80px}
+.about-svg-2{bottom:-80px;right:-60px}
+.about-svg-dots{top:30%;right:-120px}
+.about-svg-ring{top:15%;right:15%}
+.about-svg-wave{bottom:40px;left:15%}
+
+/* ANIMATIONS */
+@keyframes floatSvg{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-20px)}
+}
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+  .about-container{
+    grid-template-columns:1fr;
+    text-align:center;
+  }
+  .about-buttons{
+    justify-content:center;
+  }
+  .image-wrapper{
+    max-width:380px;
+    margin:auto;
+  }
+}

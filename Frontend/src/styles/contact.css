@@ -1,0 +1,239 @@
+/* ===== CONTACT SECTION ===== */
+
+.contact-section {
+  padding: 120px 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* keep content above SVG */
+.contact-section > *:not(.contact-decor) {
+  position: relative;
+  z-index: 2;
+}
+
+/* ===== TITLE UNDERLINE ===== */
+
+.contact-underline {
+  display: block;
+  width: 0;
+  height: 4px;
+  margin: 12px auto 0;
+  background: linear-gradient(90deg, #6366f1, #8b5cf6);
+  border-radius: 6px;
+  transition: width 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.reveal.show .contact-underline {
+  width: 230px;
+}
+
+/* ===== SUBTITLE ===== */
+
+.contact-subtitle {
+  margin: 20px auto 60px;
+  max-width: 520px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* ===== GRID ===== */
+
+.contact-grid {
+  max-width: 1000px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 60px;
+}
+
+/* ===== LEFT: INFO ===== */
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.info-card {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  text-align: left;
+  padding: 22px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(14px);
+  box-shadow: var(--shadow);
+  transition: 0.35s ease;
+}
+
+.info-card span {
+  font-size: 26px;
+}
+
+.info-card:hover {
+  transform: translateY(-8px);
+}
+
+.contact-icon h4 {
+  font-size: 15px;
+  margin-bottom: 4px;
+}
+
+.contact-icon p {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+/* ===== RIGHT: FORM ===== */
+
+.contact-form {
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(14px);
+  border-radius: 26px;
+  padding: 36px;
+  box-shadow: var(--shadow);
+}
+
+/* dark mode */
+body.dark .contact-form,
+body.dark .info-card {
+  background: rgba(30, 41, 59, 0.6);
+}
+
+/* ===== FORM FIELDS ===== */
+
+.field {
+  position: relative;
+  margin-bottom: 26px;
+}
+
+.field input,
+.field textarea {
+  width: 100%;
+  padding: 14px 16px;
+  border: none;
+  border-radius: 14px;
+  background: rgba(99, 102, 241, 0.08);
+  outline: none;
+  font-size: 14px;
+  color: var(--text);
+  resize: none;
+}
+
+.field label {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 13px;
+  color: var(--muted);
+  pointer-events: none;
+  transition: 0.3s ease;
+  background: transparent;
+}
+
+/* floating label */
+.field input:focus + label,
+.field textarea:focus + label,
+.field input:valid + label,
+.field textarea:valid + label {
+  top: -8px;
+  background: var(--bg);
+  padding: 0 6px;
+  font-size: 12px;
+  color: #6366f1;
+}
+
+/* ===== SUBMIT BUTTON ===== */
+
+.contact-form .btn {
+  width: 100%;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+/* ===== SVG DECOR BASE ===== */
+
+.contact-decor {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0.18;
+  z-index: 0;
+}
+
+/* ===== DECOR VARIANTS ===== */
+
+/* circuit */
+.contact-circuit {
+  width: 420px;
+  top: 80px;
+  left: -140px;
+  animation: circuitMove 20s linear infinite;
+}
+
+/* rings */
+.contact-rings {
+  width: 270px;
+  top: -40px;
+  right: -50px;
+  animation: ringRotate 28s linear infinite;
+}
+
+/* envelope */
+.contact-envelope {
+  width: 260px;
+  top: 700px;
+  right: -50px;
+  animation: envelopeFloat 14s ease-in-out infinite;
+}
+
+/* ===== ANIMATIONS ===== */
+
+@keyframes circuitMove {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(60px);
+  }
+}
+
+@keyframes ringRotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes envelopeFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-22px);
+  }
+}
+
+/* dark mode decor */
+body.dark .contact-decor {
+  opacity: 0.12;
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media (max-width: 900px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .contact-envelope {
+    display: none;
+  }
+}
