@@ -12,7 +12,7 @@ export const apiFetch = async (url, options = {}) => {
 
   if (res.status === 401) {
     const refresh = await fetch(
-      "http://localhost:5050/api/admin/refresh",
+      `${import.meta.env.VITE_API_BASE_URL}/api/admin/refresh`,
       { method: "POST", credentials: "include" }
     );
 
@@ -21,7 +21,7 @@ export const apiFetch = async (url, options = {}) => {
       accessToken = data.accessToken;
       localStorage.setItem("accessToken", accessToken);
 
-      return apiFetch(url, options); // retry
+      return apiFetch(url, options);
     }
   }
 

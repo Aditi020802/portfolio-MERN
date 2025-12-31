@@ -1,14 +1,11 @@
 const express = require("express");
+const path = require("path");
 const sendMail = require("../utils/sendMail");
 const { resumeLimiter } = require("../middleware/rateLimiter");
 
 const router = express.Router();
 
-/**
- * 🔔 Notify backend when resume is downloaded
- * POST /api/resume/notify-download
- */
-router.post("/download", resumeLimiter, async (req, res) => {
+router.get("/download", resumeLimiter, async (req, res) => {
   try {
     await sendMail({
       subject: "📄 Resume Downloaded",
@@ -19,10 +16,11 @@ router.post("/download", resumeLimiter, async (req, res) => {
       `
     });
 
-    res.json({ success: true });
+    const filePath = path.join(__dirname, "../assets/resume.pdf");
+    res.download(filePath, "Aditi_Modhvadiya_Resume.pdf");
   } catch (err) {
-    console.error("Resume email error:", err);
-    res.status(500).json({ success: false });
+    console.error(err);
+    res.status(500).send("Error downloading resume");
   }
 });
 

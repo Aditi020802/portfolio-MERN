@@ -12,12 +12,8 @@ import Skills from "./sections/Skills";
 import Projects from "./sections/Projects";
 import Contact from "./sections/Contact";
 
-/* Admin Pages */
-import AdminLoginRedirect from "./pages/AdminLoginRedirect";
-import AdminDashboard from "./pages/AdminDashboard";
-import ProtectedRoute from "./components/ProtectedRoute";
 
-function PortfolioLayout() {
+export default function App() {
   return (
     <>
       <CanvasBG />
@@ -47,32 +43,5 @@ function PortfolioLayout() {
 
       <Footer />
     </>
-  );
-}
-
-export default function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        
-
-        {/* Portfolio */}
-        <Route path="/" element={<PortfolioLayout />} />
-
-        {/* Admin Login */}
-        <Route path="/admin-login" element={<AdminLoginRedirect />} />
-
-        {/* Protected Admin Dashboard */}
-        <Route
-          path="/admin"
-          element={
-            <ProtectedRoute>
-              <AdminDashboard />
-            </ProtectedRoute>
-          }
-        />
-
-      </Routes>
-    </BrowserRouter>
   );
 }

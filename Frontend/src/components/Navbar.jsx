@@ -11,27 +11,7 @@ export default function Navbar() {
 
   const closeMenu = () => setOpen(false);
 
-  /* ================= RESUME DOWNLOAD ================= */
-  const handleResumeDownload = async () => {
-    try {
-      // 🔔 notify backend (send email)
-      fetch(`${import.meta.env.VITE_API_BASE_URL}/api/resume/download`, {
-        method: "POST"
-      });
-    } catch (err) {
-      console.error("Resume notify failed");
-    }
-
-    // 📄 download resume from frontend
-    const link = document.createElement("a");
-    link.href = resume;
-    link.download = "Aditi_Modhvadiya_Resume.pdf";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
-  /* ================= SMOOTH SCROLL ================= */
+  // smooth scroll function
   const scrollToSection = (id) => {
     const el = document.getElementById(id);
     if (!el) return;
@@ -41,7 +21,7 @@ export default function Navbar() {
     closeMenu();
   };
 
-  /* ================= ACTIVE SECTION ================= */
+  // detect section on scroll
   useEffect(() => {
     const sections = document.querySelectorAll("section");
 
@@ -63,7 +43,7 @@ export default function Navbar() {
   return (
     <div className="site">
       <header className="navbar">
-        {/* ================= LEFT ================= */}
+        {/* LEFT */}
         <div className="nav-left">
           <div className="logo" onClick={() => scrollToSection("home")}>
             <div className="logo-image">
@@ -85,27 +65,17 @@ export default function Navbar() {
           </nav>
         </div>
 
-        {/* ================= RIGHT ================= */}
+        {/* RIGHT */}
         <div className="nav-right">
           {/* THEME TOGGLE */}
           <div className="theme-toggle" onClick={toggleTheme}>
-            <svg
-              className="sun"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
+            <svg class="sun" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path d="M12 7 A5 5 0 1 1 11.999 7" fill="#fff" />
-              <path
-                d="M12 7 A5 5 0 1 1 11.999 7 M12 1 V4 M12 20 V23
-                M1 12 H4 M20 12 H23
-                M4.5 4.5 L6.8 6.8 M17.2 6.8 L19.5 4.5
-                M4.5 19.5 L6.8 17.2 M17.2 17.2 L19.5 19.5"
-                fill="none"
-                stroke="#fff"
-                strokeWidth="1.2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
+              <path d="M12 7 A5 5 0 1 1 11.999 7 M12 1 V4 M12 20 V23
+             M1 12 H4 M20 12 H23
+             M4.5 4.5 L6.8 6.8 M17.2 6.8 L19.5 4.5
+             M4.5 19.5 L6.8 17.2 M17.2 17.2 L19.5 19.5" fill="none" stroke="#fff" stroke-width="1.2"
+                stroke-linecap="round" stroke-linejoin="round" />
             </svg>
 
             <svg className="moon" viewBox="0 0 24 24" fill="#38bdf8">
@@ -123,28 +93,25 @@ export default function Navbar() {
             <span />
           </button>
 
-          {/* RESUME BUTTON (DESKTOP) */}
-          <button className="btn" onClick={handleResumeDownload}>
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
+          {/* RESUME */}
+          <a
+            href="http://localhost:5050/api/resume/download"
+            className="btn"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
               <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
               <polyline points="7 10 12 15 17 10" />
               <line x1="12" y1="15" x2="12" y2="3" />
             </svg>
             Resume
-          </button>
+          </a>
         </div>
       </header>
 
-      {/* ================= MOBILE MENU ================= */}
+      {/* MOBILE MENU */}
       <div className={`mobile-menu ${open ? "show" : ""}`}>
         {["home", "about", "skills", "projects", "contact"].map((item) => (
           <button
@@ -156,10 +123,9 @@ export default function Navbar() {
           </button>
         ))}
 
-        {/* RESUME BUTTON (MOBILE) */}
-        <button className="btn" onClick={handleResumeDownload}>
+        <a href={resume} download className="btn">
           Resume
-        </button>
+        </a>
       </div>
     </div>
   );

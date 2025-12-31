@@ -5,10 +5,6 @@ const cookieParser = require("cookie-parser");
 
 const contactRoutes = require("./routes/contact.routes");
 const resumeRoutes = require("./routes/resume.routes");
-const analyticsRoutes = require("./routes/analytics.routes");
-const adminRoutes = require("./routes/admin.routes");
-
-const trackVisit = require("./middleware/trackVisit");
 
 const app = express();
 
@@ -26,15 +22,9 @@ app.use(helmet());
 app.use(express.json());
 app.use(cookieParser());
 
-/* ✅ TRACK VISIT ONLY ON HOMEPAGE */
-app.get("/", trackVisit, (req, res) => {
-  res.send("Backend running");
-});
 
 /* ❌ DO NOT track API calls */
 app.use("/api/contact", contactRoutes);
 app.use("/api/resume", resumeRoutes);
-app.use("/api/analytics", analyticsRoutes);
-app.use("/api/admin", adminRoutes);
 
 module.exports = app;
