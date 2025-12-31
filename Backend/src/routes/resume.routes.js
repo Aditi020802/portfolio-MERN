@@ -1,5 +1,6 @@
 const express = require("express");
 const path = require("path");
+const fs = require("fs");
 const sendMail = require("../utils/sendMail");
 const { resumeLimiter } = require("../middleware/rateLimiter");
 
@@ -16,10 +17,20 @@ router.get("/download", resumeLimiter, async (req, res) => {
       `
     });
 
-    const filePath = path.join(__dirname, "../assets/resume.pdf");
+    const filePath = path.resolve(
+      __dirname,
+      "../assets/resume.pdf"
+    );
+
+    // 🔴 IMPORTANT: check file exists
+    if (!fs.existsSync(filePath)) {
+      console.error("Resume file not found at:", filePath);
+      return res.status(404).send("Resume file not found");
+    }
+
     res.download(filePath, "Aditi_Modhvadiya_Resume.pdf");
   } catch (err) {
-    console.error(err);
+    console.error("Resume download error:", err);
     res.status(500).send("Error downloading resume");
   }
 });
