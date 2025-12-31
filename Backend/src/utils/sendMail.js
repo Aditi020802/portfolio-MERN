@@ -17,8 +17,7 @@ const sendMail = async ({ subject, html }) => {
         headers: {
           "api-key": process.env.BREVO_API_KEY,
           "Content-Type": "application/json"
-        },
-        timeout: 10000
+        }
       }
     );
 
