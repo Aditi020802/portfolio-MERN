@@ -4,23 +4,40 @@ module.exports = async (req, res, next) => {
   try {
     const today = new Date().toISOString().split("T")[0];
 
-    const ip =
-      req.headers["x-forwarded-for"]?.split(",")[0] ||
-      req.socket.remoteAddress;
+    let country = "Unknown";
+    let city = "Unknown";
 
-    // Free IP location (no key required)
-    const geoRes = await fetch(`https://ipapi.co/${ip}/json/`);
-    const geo = await geoRes.json();
+    // ❌ Disable Geo API in production (recommended)
+    if (process.env.NODE_ENV !== "production") {
+      try {
+        const ip =
+          req.headers["x-forwarded-for"]?.split(",")[0] ||
+          req.socket.remoteAddress;
 
-    const country = geo.country_name || "Unknown";
-    const city = geo.city || "Unknown";
+        const geoRes = await fetch(`https://ipapi.co/${ip}/json/`);
+        const contentType = geoRes.headers.get("content-type");
+
+        if (
+          geoRes.ok &&
+          contentType &&
+          contentType.includes("application/json")
+        ) {
+          const geo = await geoRes.json();
+          country = geo.country_name || "Unknown";
+          city = geo.city || "Unknown";
+        }
+      } catch (e) {
+        console.error("Geo lookup failed:", e.message);
+      }
+    }
 
     let visit = await Visit.findOne({ date: today });
 
     if (!visit) {
-      visit = await Visit.create({
+      await Visit.create({
         date: today,
-        locations: [{ country, city }]
+        count: 1,
+        locations: [{ country, city, count: 1 }]
       });
     } else {
       visit.count += 1;
@@ -30,12 +47,12 @@ module.exports = async (req, res, next) => {
       );
 
       if (loc) loc.count += 1;
-      else visit.locations.push({ country, city });
+      else visit.locations.push({ country, city, count: 1 });
 
       await visit.save();
     }
   } catch (err) {
-    console.error("Visit tracking error:", err);
+    console.error("Visit tracking error:", err.message);
   }
 
   next();
