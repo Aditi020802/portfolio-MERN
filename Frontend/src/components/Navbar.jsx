@@ -95,7 +95,7 @@ export default function Navbar() {
 
           {/* RESUME */}
           <a
-            href="http://localhost:5050/api/resume/download"
+            href={`${import.meta.env.VITE_API_BASE_URL}/api/resume/download`}
             className="btn"
             target="_blank"
             rel="noopener noreferrer"

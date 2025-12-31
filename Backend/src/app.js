@@ -8,6 +8,9 @@ const resumeRoutes = require("./routes/resume.routes");
 
 const app = express();
 
+/* ✅ REQUIRED FOR RENDER + RATE LIMIT */
+app.set("trust proxy", 1);
+
 app.use(
   cors({
     origin:
@@ -22,8 +25,6 @@ app.use(helmet());
 app.use(express.json());
 app.use(cookieParser());
 
-
-/* ❌ DO NOT track API calls */
 app.use("/api/contact", contactRoutes);
 app.use("/api/resume", resumeRoutes);
 
