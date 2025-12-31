@@ -8,18 +8,30 @@ const resumeRoutes = require("./routes/resume.routes");
 
 const app = express();
 
-/* ✅ REQUIRED FOR RENDER + RATE LIMIT */
+/* ✅ REQUIRED FOR RENDER */
 app.set("trust proxy", 1);
 
+/* ✅ FINAL CORS FIX */
 app.use(
   cors({
-    origin:
-      process.env.NODE_ENV === "production"
-        ? "https://your-frontend.netlify.app"
-        : "http://localhost:5173",
+    origin: function (origin, callback) {
+      // allow requests with no origin (like Postman)
+      if (!origin) return callback(null, true);
+
+      if (origin === "http://localhost:5173") {
+        return callback(null, true);
+      }
+
+      return callback(new Error("CORS blocked"));
+    },
+    methods: ["GET", "POST", "OPTIONS"],
+    allowedHeaders: ["Content-Type"],
     credentials: true
   })
 );
+
+/* ✅ HANDLE PREFLIGHT EXPLICITLY */
+app.options("*", cors());
 
 app.use(helmet());
 app.use(express.json());
