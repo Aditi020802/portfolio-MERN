@@ -12,25 +12,30 @@ router.get("/download", resumeLimiter, async (req, res) => {
       subject: "📄 Resume Downloaded",
       html: `
         <h3>Resume Download Alert</h3>
-        <p>Someone downloaded your resume.</p>
+        <p>Your resume was downloaded.</p>
         <p><b>Time:</b> ${new Date().toLocaleString()}</p>
       `
     });
 
+    // ✅ ABSOLUTE PATH (Render-safe)
     const filePath = path.resolve(
       __dirname,
-      "../assets/resume.pdf"
+      "..",
+      "assets",
+      "resume.pdf"
     );
 
-    // 🔴 IMPORTANT: check file exists
+    // 🔍 Debug log (IMPORTANT)
+    console.log("Looking for resume at:", filePath);
+
     if (!fs.existsSync(filePath)) {
-      console.error("Resume file not found at:", filePath);
+      console.error("❌ Resume file NOT FOUND");
       return res.status(404).send("Resume file not found");
     }
 
     res.download(filePath, "Aditi_Modhvadiya_Resume.pdf");
   } catch (err) {
-    console.error("Resume download error:", err);
+    console.error("❌ Resume download error:", err);
     res.status(500).send("Error downloading resume");
   }
 });
