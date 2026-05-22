@@ -36,7 +36,7 @@ export default function Projects() {
       fullDesc:
         "A full-stack blood donation platform built with the MERN stack, featuring donor and patient management, blood request handling, donation scheduling, real-time blood stock updates, secure authentication, and an admin dashboard for system control.",
       tech: ["React", "Node.js", "Express", "MongoDB"],
-      live: "https://sharelifegiveblood.netlify.app/",
+      live: "https://sharelifegiveblood1.netlify.app",
       source: "https://github.com/Aditi020802/-Blood-Donation-Management-System"
     },
     {
